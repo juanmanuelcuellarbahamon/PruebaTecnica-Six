@@ -1,0 +1,35 @@
+<div class="container">
+  <button mat-raised-button color="primary" (click)="loadUsers()">Buscar</button>
+
+  @if (isLoading()) {
+    <div class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error">{{ errorMessage() }}</div>
+  }
+
+  @if (showTable()) {
+    <table
+      mat-table
+      [dataSource]="dataSource()"
+      class="mat-elevation-z8"
+      style="width: 100%; margin-top: 20px"
+    >
+      <ng-container matColumnDef="nombreCompleto">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let user">{{ user.nombre }} {{ user.apellido }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="usuID">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let user">{{ user.usuID }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  }
+</div>
